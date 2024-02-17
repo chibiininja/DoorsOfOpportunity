@@ -95,7 +95,7 @@ public class Door : MonoBehaviour
 
             if (IsRotatingDoor)
             {
-                float dot = Vector3.Dot(Forward, OpenForward ? Forward : Backward);
+                float dot = Vector3.Dot(Forward, !OpenForward ? Forward : Backward);
                 AnimationCoroutine = StartCoroutine(DoRotationOpen(dot));
             }
         }
