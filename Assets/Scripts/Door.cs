@@ -5,11 +5,12 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     public bool IsOpen = false;
+    public GameObject Highlight;
+    [Header("Rotation Configs")]
     [SerializeField]
     private bool IsRotatingDoor = true;
     [SerializeField]
     private float RotationSpeed = 1f;
-    [Header("Rotation Configs")]
     [SerializeField]
     private float RotationAmount = 90f;
     [SerializeField]

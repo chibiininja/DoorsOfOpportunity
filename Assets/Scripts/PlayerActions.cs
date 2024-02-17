@@ -11,6 +11,8 @@ public class PlayerActions : MonoBehaviour
     [SerializeField]
     private LayerMask UseLayers;
 
+    private Door pastDoor = null;
+
     public void OnUse()
     {
         Debug.Log("Use!");
@@ -34,7 +36,16 @@ public class PlayerActions : MonoBehaviour
     {
         if (Physics.Raycast(Camera.position, Camera.forward, out RaycastHit hit, MaxUseDistance, UseLayers) && hit.collider.transform.parent.TryGetComponent<Door>(out Door door))
         {
-            //Outline Door
+            door.Highlight.SetActive(true);
+            if (pastDoor != door && pastDoor != null)
+            {
+                pastDoor.Highlight.SetActive(false);
+            }
+            pastDoor = door;
+        }
+        else if (pastDoor != null)
+        {
+            pastDoor.Highlight.SetActive(false);
         }
     }
 }
