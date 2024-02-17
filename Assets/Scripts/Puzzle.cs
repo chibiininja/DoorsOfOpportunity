@@ -23,23 +23,20 @@ public class Puzzle : MonoBehaviour
         Inputs.ForEach(delegate (DoorTuple t)
         {
             if (t.door == door)
-                CheckValues();
+                StartCoroutine(CheckValues());
         });
     }
 
-    void CheckValues()
+    IEnumerator CheckValues()
     {
+        yield return new WaitForSeconds(0.1f);
         Correct = true;
         Inputs.ForEach(delegate (DoorTuple t)
         {
             if (t.door.IsOpen != t.expectedValue)
                 Correct = false;
         });
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
         if (IsLinked)
         {
             if (Correct)
@@ -49,8 +46,8 @@ public class Puzzle : MonoBehaviour
         }
         else
         {
-            if (Correct) 
-            { 
+            if (Correct)
+            {
                 SetOutputs(true);
             }
         }
