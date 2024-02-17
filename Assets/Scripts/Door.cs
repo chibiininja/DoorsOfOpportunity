@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 
 public class Door : MonoBehaviour
@@ -20,6 +21,7 @@ public class Door : MonoBehaviour
 
     private Vector3 StartRotation;
     private Vector3 Forward;
+    private Vector3 Backward;
     private Vector3 StartPosition;
 
     private Coroutine AnimationCoroutine;
@@ -29,11 +31,39 @@ public class Door : MonoBehaviour
         StartRotation = transform.rotation.eulerAngles;
         // "Forward" is pointing into the door frame
         Forward = transform.right;
+        Backward = new Vector3(-1f * Forward.x, -1f * Forward.y, -1f * Forward.z);
         StartPosition = transform.position;
 
         #if !(UNITY_EDITOR)
         DebugText.SetActive(false);
         #endif
+    }
+
+    private void Start()
+    {
+        if (IsOpen)
+        {
+            if (AnimationCoroutine != null)
+            {
+                StopCoroutine(AnimationCoroutine);
+            }
+
+            if (IsRotatingDoor)
+            {
+                float dot = Vector3.Dot(Forward, (new Vector3(0f, 0f, 0f) - transform.position).normalized);
+                AnimationCoroutine = StartCoroutine(DoRotationOpen(dot));
+            }
+        }
+    }
+
+    private void OnValidate()
+    {
+        DebugText.GetComponent<TextMeshPro>().text = transform.name + " is " + (IsOpen ? "Open" : "Closed");
+    }
+
+    private void Update()
+    {
+        DebugText.GetComponent<TextMeshPro>().text = transform.name + " is " + (IsOpen ? "Open" : "Closed");
     }
 
     public void Open(Vector3 UserPosition)
@@ -54,12 +84,29 @@ public class Door : MonoBehaviour
         }
     }
 
+    public void Open(bool OpenForward)
+    {
+        if (!IsOpen)
+        {
+            if (AnimationCoroutine != null)
+            {
+                StopCoroutine(AnimationCoroutine);
+            }
+
+            if (IsRotatingDoor)
+            {
+                float dot = Vector3.Dot(Forward, OpenForward ? Forward : Backward);
+                AnimationCoroutine = StartCoroutine(DoRotationOpen(dot));
+            }
+        }
+    }
+
     private IEnumerator DoRotationOpen(float ForwardAmount)
     {
         Quaternion startRotation = transform.rotation;
         Quaternion endRotation;
 
-        endRotation = Quaternion.Euler(new Vector3(0, StartRotation.y + (ForwardAmount >= ForwardDirection ? RotationAmount : -RotationAmount), 0));
+        endRotation = Quaternion.Euler(new Vector3(StartRotation.x, StartRotation.y + (ForwardAmount >= ForwardDirection ? RotationAmount : -RotationAmount), StartRotation.z));
 
         IsOpen = true;
 

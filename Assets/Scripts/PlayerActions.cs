@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerActions : MonoBehaviour
 {
     [SerializeField]
+    private GameObject puzzleManager;
+    [SerializeField]
     private Transform Camera;
     [SerializeField]
     private float MaxUseDistance = 5f;
@@ -28,6 +30,7 @@ public class PlayerActions : MonoBehaviour
                 {
                     door.Open(transform.position);
                 }
+                puzzleManager.BroadcastMessage("UpdateDoor", door);
             }
         }
     }
