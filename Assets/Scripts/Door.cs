@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Door : MonoBehaviour
 {
     public bool IsOpen = false;
     public GameObject Highlight;
+    public GameObject DebugText;
     [Header("Rotation Configs")]
     [SerializeField]
     private bool IsRotatingDoor = true;
@@ -28,6 +30,10 @@ public class Door : MonoBehaviour
         // "Forward" is pointing into the door frame
         Forward = transform.right;
         StartPosition = transform.position;
+
+        #if !(UNITY_EDITOR)
+        DebugText.SetActive(false);
+        #endif
     }
 
     public void Open(Vector3 UserPosition)
