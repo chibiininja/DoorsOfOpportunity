@@ -21,12 +21,12 @@ public class PlayerActions : MonoBehaviour
 
     public void OnUse()
     {
-        Instantiate(basicDoorSFX);
         Debug.Log("Use!");
         if (Physics.Raycast(Camera.position, Camera.forward, out RaycastHit hit, MaxUseDistance, UseLayers))
         {
             if (hit.collider.transform.parent.TryGetComponent<Door>(out Door door))
             {
+                Instantiate(basicDoorSFX);
                 if (door.IsOpen)
                 {
                     door.Close();
