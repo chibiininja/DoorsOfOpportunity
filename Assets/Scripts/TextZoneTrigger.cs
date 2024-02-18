@@ -24,48 +24,58 @@ public class TextZoneTrigger : MonoBehaviour
     {
         if (other.TryGetComponent<CharacterController>(out CharacterController controller))
         {
-            StartCoroutine(ChangeQuoteAlpha());
-            StartCoroutine(ChangeTipAlpha());
+            StartCoroutine(PhaseInQuoteAlpha());
+            StartCoroutine(PhaseInTipAlpha());
+            StartCoroutine(PhaseOutQuoteAlpha());
+            StartCoroutine(PhaseOutTipAlpha());
             TMPQuoteText.text = QuoteText;
-            TMPTipText.text = QuoteText;
+            TMPTipText.text = TipText;
         }
     }
 
-    private IEnumerator ChangeQuoteAlpha()
+    private IEnumerator PhaseInQuoteAlpha()
     {
         float time = 0;
         while (time < 1)
         {
             QuoteAlpha.alpha = Mathf.Lerp(0f, 1f, time);
             yield return null;
-            time = Time.deltaTime;
+            time += Time.deltaTime;
         }
+    }
+
+    private IEnumerator PhaseOutQuoteAlpha()
+    {
         yield return new WaitForSeconds(7f);
-        time = 0;
+        float time = 0;
         while (time < 1)
         {
             QuoteAlpha.alpha = Mathf.Lerp(1f, 0f, time);
             yield return null;
-            time = Time.deltaTime;
+            time += Time.deltaTime;
         }
     }
 
-    private IEnumerator ChangeTipAlpha()
+    private IEnumerator PhaseInTipAlpha()
     {
         float time = 0;
         while (time < 1)
         {
             TipAlpha.alpha = Mathf.Lerp(0f, 1f, time);
             yield return null;
-            time = Time.deltaTime;
+            time += Time.deltaTime;
         }
+    }
+
+    private IEnumerator PhaseOutTipAlpha()
+    {
         yield return new WaitForSeconds(7f);
-        time = 0;
+        float time = 0;
         while (time < 1)
         {
             TipAlpha.alpha = Mathf.Lerp(1f, 0f, time);
             yield return null;
-            time = Time.deltaTime;
+            time += Time.deltaTime;
         }
     }
 }
