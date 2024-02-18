@@ -8,6 +8,7 @@ public class Door : MonoBehaviour
 {
     public bool IsOpen = false;
     public GameObject Highlight;
+    public GameObject ConnectedHighlight;
     public GameObject DebugText;
     [Header("Rotation Configs")]
     [SerializeField]

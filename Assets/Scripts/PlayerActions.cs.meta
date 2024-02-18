@@ -3,7 +3,11 @@ guid: c7f4a56269ef42747a0f11d30fb07d04
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - puzzleManager: {instanceID: 0}
+  - Camera: {instanceID: 0}
+  - basicDoorSFX: {fileID: 4665165476919696580, guid: 1c2a8c2c755a6a14b9d65d75850111f0,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

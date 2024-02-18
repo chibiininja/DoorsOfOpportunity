@@ -18,6 +18,11 @@ public class Puzzle : MonoBehaviour
     public List<DoorTuple> Outputs;
     private bool Correct = false;
 
+
+    public List<DoorTuple> GetOutputs()
+    {
+        return Outputs;
+    }
     void UpdateDoor(Door door)
     {
         Inputs.ForEach(delegate (DoorTuple t)
